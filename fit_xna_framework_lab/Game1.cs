@@ -15,6 +15,8 @@ namespace fit_xna_framework_lab
         Player player1;
         Player player2;
         Ball ball;
+        Texture2D playerTexture;
+        Texture2D ballTexture;
 
         int uperBoundY;
         int bottomBoundY;
@@ -44,9 +46,9 @@ namespace fit_xna_framework_lab
             bottomBoundY = 1080;
             leftGoal = 0;
             rightGoal = 1920;
-            //player1 = new Player(new Vector2(100, 100), 1, );
-            //player2 = new Player(new Vector2(1820, 100), 1, );
-            //ball = new Ball(new Vector2(910, 540), 2, );
+            
+            
+           
             base.Initialize();
         }
 
@@ -57,6 +59,9 @@ namespace fit_xna_framework_lab
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            player1 = new Player(new Vector2(100, 100), 6, Content.Load<Texture2D>("block"));
+            player2 = new Player(new Vector2(1820, 100), 6, Content.Load<Texture2D>("block"));
+            ball = new Ball(new Vector2(910, 540), 4, Content.Load<Texture2D>("ball"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -82,14 +87,14 @@ namespace fit_xna_framework_lab
                 Exit();
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.W))
-                player1.Move(1);
-            else if (state.IsKeyDown(Keys.S))
                 player1.Move(-1);
+            else if (state.IsKeyDown(Keys.S))
+                player1.Move(1);
 
             if (state.IsKeyDown(Keys.Up))
-                player2.Move(1);
-            else if (state.IsKeyDown(Keys.Down))
                 player2.Move(-1);
+            else if (state.IsKeyDown(Keys.Down))
+                player2.Move(1);
 
             ball.Move();
             
@@ -109,7 +114,9 @@ namespace fit_xna_framework_lab
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
+            ball.Draw(spriteBatch);
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

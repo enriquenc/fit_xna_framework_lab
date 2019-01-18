@@ -12,20 +12,20 @@ namespace fit_xna_framework_lab.Objects
     {
         public Vector2 coordinates;
         public Vector2 start;
-        public double speed;
+        public float speed;
         public int score;
         public Texture2D texture;
         public int width;
         public int height;
 
-        public Player(Vector2 _coordinates, double _speed, Texture2D _texture, int _width, int _height)
+        public Player(Vector2 _coordinates, float _speed, Texture2D _texture)
         {
             coordinates = _coordinates;
             start = _coordinates;
             speed = _speed;
             texture = _texture;
-            width = _width;
-            height = _height;
+            width = texture.Width;
+            height = texture.Height;
         }
 
         public void CheckCollision(Ball ball)
@@ -40,8 +40,8 @@ namespace fit_xna_framework_lab.Objects
             }
             else
             {
-                if (ball.coordinates.X >= coordinates.X + width
-                    && ball.coordinates.X < coordinates.X
+                if (ball.coordinates.X + ball.width >= coordinates.X
+                    && ball.coordinates.X + ball.width < coordinates.X + width
                     && ball.coordinates.Y >= coordinates.Y
                     && ball.coordinates.Y <= coordinates.Y + height)
                     ball.currentVector = ball.currentVector == 1 ? 0 : 3;
@@ -49,9 +49,17 @@ namespace fit_xna_framework_lab.Objects
         }
 
 
-        public void move(int distance)
+        public void Move(int distance)
         {
+            if (coordinates.Y + speed * distance >= 0 && coordinates.Y + speed * distance + height <= 1080)
+                coordinates.Y = coordinates.Y + speed * distance;
+        }
 
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, new Rectangle((int)coordinates.X, (int)coordinates.Y, width, height), Color.White);
+            spriteBatch.End();
         }
     }
 }
