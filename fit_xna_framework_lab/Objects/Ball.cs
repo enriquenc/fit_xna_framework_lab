@@ -70,7 +70,7 @@ namespace fit_xna_framework_lab.Objects
 
             if (coordinates.X <= leftGoalY)
             {
-                player1.score++;
+                player2.score++;
                 currentVector = GetRandomVector();
                 coordinates = start;
                 player1.coordinates = player1.start;
@@ -78,7 +78,7 @@ namespace fit_xna_framework_lab.Objects
             }
             else if (coordinates.X + width >= RightGoalY)
             {
-                player2.score++;
+                player1.score++;
                 currentVector = GetRandomVector();
                 coordinates = start;
                 player1.coordinates = player1.start;

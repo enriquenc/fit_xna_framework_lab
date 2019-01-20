@@ -26,6 +26,7 @@ namespace fit_xna_framework_lab.Objects
             texture = _texture;
             width = texture.Width;
             height = texture.Height;
+            score = 0;
         }
 
         public void CheckCollision(Ball ball)
@@ -34,16 +35,16 @@ namespace fit_xna_framework_lab.Objects
             {
                 if (ball.coordinates.X <= coordinates.X + width
                     && ball.coordinates.X > coordinates.X
-                    && ball.coordinates.Y >= coordinates.Y
-                    && ball.coordinates.Y <= coordinates.Y + height)
+                    &&(ball.coordinates.Y >= coordinates.Y || ball.coordinates.Y + ball.height >= coordinates.Y)
+                    && (ball.coordinates.Y <= coordinates.Y + height || ball.coordinates.Y + ball.height <= coordinates.Y + height))
                     ball.currentVector = ball.currentVector == 0 ? 1 : 2;
             }
             else
             {
                 if (ball.coordinates.X + ball.width >= coordinates.X
                     && ball.coordinates.X + ball.width < coordinates.X + width
-                    && ball.coordinates.Y >= coordinates.Y
-                    && ball.coordinates.Y <= coordinates.Y + height)
+                    && (ball.coordinates.Y >= coordinates.Y || ball.coordinates.Y + ball.height >= coordinates.Y)
+                    && (ball.coordinates.Y <= coordinates.Y + height || ball.coordinates.Y + ball.height <= coordinates.Y + height))
                     ball.currentVector = ball.currentVector == 1 ? 0 : 3;
             }
         }

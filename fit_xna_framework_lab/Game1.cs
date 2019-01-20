@@ -17,6 +17,7 @@ namespace fit_xna_framework_lab
         Ball ball;
         Texture2D playerTexture;
         Texture2D ballTexture;
+        SpriteFont font;
 
         int uperBoundY;
         int bottomBoundY;
@@ -59,11 +60,11 @@ namespace fit_xna_framework_lab
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            player1 = new Player(new Vector2(100, 100), 6, Content.Load<Texture2D>("block"));
-            player2 = new Player(new Vector2(1820, 100), 6, Content.Load<Texture2D>("block"));
-            ball = new Ball(new Vector2(910, 540), 4, Content.Load<Texture2D>("ball"));
+            player1 = new Player(new Vector2(100, 350), 6, Content.Load<Texture2D>("block"));
+            player2 = new Player(new Vector2(1720, 350), 6, Content.Load<Texture2D>("block"));
+            ball = new Ball(new Vector2(910, 540), 7, Content.Load<Texture2D>("ball"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            font = Content.Load<SpriteFont>("file");
             // TODO: use this.Content to load your game content here
         }
 
@@ -102,6 +103,8 @@ namespace fit_xna_framework_lab
             ball.CheckCollision(uperBoundY, bottomBoundY, leftGoal, rightGoal, player1, player2);
             player1.CheckCollision(ball);
             player2.CheckCollision(ball);
+
+            
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -114,9 +117,17 @@ namespace fit_xna_framework_lab
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            ball.Draw(spriteBatch);
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
-            ball.Draw(spriteBatch);
+            
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, player1.score.ToString(), new Vector2(400, 100), Color.Black);
+            spriteBatch.DrawString(font, player2.score.ToString(), new Vector2(1520, 100), Color.Black);
+            spriteBatch.End();
+
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
