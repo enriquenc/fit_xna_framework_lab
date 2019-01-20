@@ -44,9 +44,9 @@ namespace fit_xna_framework_lab
         {
             // TODO: Add your initialization logic here
             uperBoundY = 0;
-            bottomBoundY = 1080;
+            bottomBoundY = graphics.PreferredBackBufferHeight;
             leftGoal = 0;
-            rightGoal = 1920;
+            rightGoal = graphics.PreferredBackBufferWidth;
             
             
            
@@ -60,9 +60,13 @@ namespace fit_xna_framework_lab
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            player1 = new Player(new Vector2(100, 350), 6, Content.Load<Texture2D>("block"));
-            player2 = new Player(new Vector2(1720, 350), 6, Content.Load<Texture2D>("block"));
-            ball = new Ball(new Vector2(910, 540), 7, Content.Load<Texture2D>("ball"));
+            Texture2D blockTexture = Content.Load<Texture2D>("block");
+            Texture2D ballTexture = Content.Load<Texture2D>("ball");
+
+            player1 = new Player(new Vector2(100, (bottomBoundY - blockTexture.Height) / 2), 6, blockTexture);
+            player2 = new Player(new Vector2(rightGoal - 200, (bottomBoundY - blockTexture.Height) / 2), 6, blockTexture);
+            ball = new Ball(new Vector2(rightGoal / 2, bottomBoundY / 2), 7, ballTexture);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("file");
             // TODO: use this.Content to load your game content here
@@ -88,14 +92,14 @@ namespace fit_xna_framework_lab
                 Exit();
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.W))
-                player1.Move(-1);
+                player1.Move(-1, uperBoundY, bottomBoundY);
             else if (state.IsKeyDown(Keys.S))
-                player1.Move(1);
+                player1.Move(1, uperBoundY, bottomBoundY);
 
             if (state.IsKeyDown(Keys.Up))
-                player2.Move(-1);
+                player2.Move(-1, uperBoundY, bottomBoundY);
             else if (state.IsKeyDown(Keys.Down))
-                player2.Move(1);
+                player2.Move(1, uperBoundY, bottomBoundY);
 
             ball.Move();
             
@@ -125,7 +129,7 @@ namespace fit_xna_framework_lab
 
             spriteBatch.Begin();
             spriteBatch.DrawString(font, player1.score.ToString(), new Vector2(400, 100), Color.Black);
-            spriteBatch.DrawString(font, player2.score.ToString(), new Vector2(1520, 100), Color.Black);
+            spriteBatch.DrawString(font, player2.score.ToString(), new Vector2(rightGoal - 400, 100), Color.Black);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

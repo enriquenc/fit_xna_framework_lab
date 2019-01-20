@@ -50,9 +50,9 @@ namespace fit_xna_framework_lab.Objects
         }
 
 
-        public void Move(int distance)
+        public void Move(int distance, int uperBoundY, int bottomBoundY)
         {
-            if (coordinates.Y + speed * distance >= 0 && coordinates.Y + speed * distance + height <= 1080)
+            if (coordinates.Y + speed * distance >= uperBoundY && coordinates.Y + speed * distance + height <= bottomBoundY)
                 coordinates.Y = coordinates.Y + speed * distance;
         }
 
